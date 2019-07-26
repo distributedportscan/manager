@@ -11,7 +11,7 @@ envsubst < docker-compose.yml.sample > docker-compose.yml
 
 function build(){
   rm -Rf oauth-proxy 2>/dev/null
-  git clone https://github.com/distributedportscan/oauth-proxy.git . && cd oauth-proxy
+  git clone https://github.com/distributedportscan/oauth-proxy.git && cd oauth-proxy
   cd nginx && docker build -t nginx-authenticator . && cd ..
   cd ..
   rm -Rf oauth-proxy 2>/dev/null
