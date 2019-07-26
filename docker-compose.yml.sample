@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  ds-manager:
+    restart: always
+    image: ds-manager
+    container_name: ds-manager
+    volumes:
+      - ./src/etc/config.yaml:/app/etc/config.yaml
+    depends_on:
+      - rabbitmq
+    expose:
+      - "5000"
+    links:
+      - rabbitmq
+
+  authenticator:
+    restart: always
+    image: authenticator 
+    expose:
+      - "80"
+    volumes:
+      - ./src/etc/auth.yaml:/opt/oauth-proxy/conf.yaml
+
+  nginx-authenticator:
+    restart: always
+    image: nginx-authenticator
+    environment:
+      - "APP_URL=http://ds-manager:5000"
+    ports:
+      - "80:80"
+    links:
+      - authenticator
+      - ds-manager 
+
+  rabbitmq:
+    restart: always
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    environment:
+      - "RABBITMQ_DEFAULT_VHOST=portscan"
+      - "RABBITMQ_DEFAULT_USER=admin"
+      - "RABBITMQ_DEFAULT_PASS=$ADMINPASS"
+    ports:
+      - "5672:5672"

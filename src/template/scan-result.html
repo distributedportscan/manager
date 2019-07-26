@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+  <label>Netwokr to scan</label>
+  <input type="text" value="" id="network-to-scan">
+</div>
+<div>
+  <button id="button-scan" onclick="simple_scan()">START SCAN</button>
+</div>
+
+<script src="/static/js/scan.js"></script> 
+{% endblock %}

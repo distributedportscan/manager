@@ -1,0 +1,6 @@
+google-oauth:
+  - client_id: "[REDACTED]"
+    client_secret: "[REDACTED]"
+    redirect_uri: "http://[yourserver]/google-auth"
+    emails: [""]
+    domains: []
