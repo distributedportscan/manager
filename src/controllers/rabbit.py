@@ -18,7 +18,7 @@ class Messages(object):
     def send(self,topic,msg):
         connection = pika.BlockingConnection(self.parameters)
         channel = connection.channel()
-        channel.queue_declare(queue=topic)
+        #channel.queue_declare(queue=topic)
         channel.basic_publish(exchange="",routing_key=topic,body=msg)
         connection.close()
 
