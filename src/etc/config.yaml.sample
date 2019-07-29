@@ -1,0 +1,10 @@
+rabbitmq:
+  server: rabbitmq
+  user: admin
+  password: admin-password-goes-here 
+  worker: worker-password-goes-here
+
+logging: [ toDisk, toSplunk ]
+
+scan:
+  maxhosts: 16
