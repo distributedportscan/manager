@@ -11,27 +11,28 @@ envsubst < docker-compose.yml.sample > docker-compose.yml
 
 function build(){
   rm -Rf oauth-proxy 2>/dev/null
-  git clone https://github.com/distributedportscan/oauth-proxy.git && cd oauth-proxy
-  cd nginx && docker build -t nginx-authenticator . && cd ..
-  cd ..
+  git clone https://github.com/distributedportscan/oauth-proxy.git 
+  docker build -t nginx-authenticator -f oauth-proxy/nginx/Dockerfile oauth-proxy/nginx/
+  docker build -t authenticator -f oauth-proxy/app/Dockerfile oauth-proxy/app/
   rm -Rf oauth-proxy 2>/dev/null
-  cd src && sudo docker build -t ds-manager . && cd ../
+  docker build -t ds-manager -f src/Dockerfile src/
 }
 
 function start(){
-  sudo docker-compose up -d
+  docker-compose up -d
   sleep 5
-  sudo docker exec -it rabbitmq rabbitmqctl add_user worker "$WORKERPASS"
-  sudo docker exec -it rabbitmq rabbitmqctl set_permissions -p portscan worker ".*" ".*" ".*";
+  docker exec -it rabbitmq rabbitmqctl add_user worker "$WORKERPASS"
+  docker exec -it rabbitmq rabbitmqctl set_permissions -p portscan worker ".*" ".*" ".*";
 }
 
 function stop(){
-  sudo docker-compose down
+  docker-compose down
 }
 
 function ps(){
-  sudo docker-compose ps
+  docker-compose ps
 }
 
 $1
 rm docker-compose.yml
+
