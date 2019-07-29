@@ -6,6 +6,8 @@ templates = Blueprint('templates',__name__,url_prefix="/")
 @templates.route("/")
 def indexPage():
     queues = Messages().queues()
+    if not queues:
+        queues = []
     return render_template("index.html",queues=queues)
 
 @templates.route("/scan-results")
