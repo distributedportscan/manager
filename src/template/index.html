@@ -8,6 +8,13 @@
 <div>
   <button id="button-scan" onclick="simple_scan()">START SCAN</button>
 </div>
+<div>
+  <select>
+    {% for queue in queues %}
+    <option value="{{queue}}">{{queue}}</option>
+    {% endfor %}
+  </select>
+</div>
 
 <script src="/static/js/scan.js"></script> 
 {% endblock %}

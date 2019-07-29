@@ -1,10 +1,12 @@
+from controllers.rabbit import Messages
 from flask import Blueprint, render_template
 
 templates = Blueprint('templates',__name__,url_prefix="/")
 
 @templates.route("/")
 def indexPage():
-    return render_template("index.html")
+    queues = Messages().queues()
+    return render_template("index.html",queues=queues)
 
 @templates.route("/scan-results")
 def scanResult():

@@ -1,7 +1,8 @@
 import pika
+from pyrabbit.api import Client
+from controllers.log import Logger
 from controllers.config import Config
 from controllers.background import threaded
-from controllers.log import Logger
 
 class Messages(object):
     def __init__(self):
@@ -20,6 +21,11 @@ class Messages(object):
         channel.queue_declare(queue=topic)
         channel.basic_publish(exchange="",routing_key=topic,body=msg)
         connection.close()
+
+    def queues(self,):
+        cl = Client('%:15672' % self.config["rabbitmq"]["server"],self.config["rabbitmq"]["user"], self.config["rabbitmq"]["password"])
+        queues = [q['name'] for q in cl.get_queues()]
+        return queues
 
     @threaded
     def read(self,topic):
