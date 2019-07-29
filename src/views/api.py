@@ -13,6 +13,10 @@ def main():
         return jsonify({"msg":"invalid message"})
     subnets = Reducer(content["iprange"])
     queue = content["queue"]
+
+    if queue == "scan-result":
+        return jsonify({"msg":"You can't sent messages to this queue"})
+
     messages = Messages()
     if not subnets:
         return jsonify({"msg":"Something goes wrong!"})
