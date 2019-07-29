@@ -7,5 +7,6 @@ def indexPage():
     return render_template("index.html")
 
 @templates.route("/scan-results")
-def indexPage():
+def scanResult():
     return render_template("scan-result.html")
+
