@@ -1,4 +1,5 @@
 pika
 flask
 pyyaml
+pyrabbit
 ipaddress
