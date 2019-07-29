@@ -23,8 +23,11 @@ class Messages(object):
         connection.close()
 
     def queues(self,):
-        cl = Client('%:15672' % self.config["rabbitmq"]["server"],self.config["rabbitmq"]["user"], self.config["rabbitmq"]["password"])
+        cl = Client('{}:15672'.format(self.config["rabbitmq"]["server"]),
+                self.config["rabbitmq"]["user"], 
+                self.config["rabbitmq"]["password"])
         queues = [q['name'] for q in cl.get_queues()]
+        queues.remove("scan-result")
         return queues
 
     @threaded
